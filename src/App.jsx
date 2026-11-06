@@ -5,6 +5,15 @@ import goodPlaceBadge from './assets/yandex-good-place.png';
 import Cases from './Cases.jsx';
 import Situations from './Situations.jsx';
 import Reviews from './Reviews.jsx';
+import HonestAssessment from './HonestAssessment.jsx';
+import Workflow from './Workflow.jsx';
+import Team from './Team.jsx';
+import Pricing from './Pricing.jsx';
+import Questions from './Questions.jsx';
+import ContactForm from './ContactForm.jsx';
+import ContactSection from './ContactSection.jsx';
+import Footer from './Footer.jsx';
+import { navigationItems } from './navigation.js';
 
 function IconDefinitions() {
   return (
@@ -15,17 +24,37 @@ function IconDefinitions() {
   );
 }
 
-function Header({ onContact, onHome, onCases, onSituations, onReviews }) {
+function Header({ onContact, onHome, onNavigate }) {
   const menuRef = useRef(null);
+  const moreRef = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const desktop = window.matchMedia('(min-width: 1051px)');
     function closeOnDesktop() {
       if (desktop.matches) menuRef.current?.close();
+      else if (moreRef.current) moreRef.current.open = false;
     }
     desktop.addEventListener('change', closeOnDesktop);
     return () => desktop.removeEventListener('change', closeOnDesktop);
+  }, []);
+
+  useEffect(() => {
+    function closeOutside(event) {
+      if (moreRef.current && !moreRef.current.contains(event.target)) moreRef.current.open = false;
+    }
+    function closeOnEscape(event) {
+      if (event.key === 'Escape' && moreRef.current?.open) {
+        moreRef.current.open = false;
+        moreRef.current.querySelector('summary')?.focus();
+      }
+    }
+    document.addEventListener('pointerdown', closeOutside);
+    document.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.removeEventListener('pointerdown', closeOutside);
+      document.removeEventListener('keydown', closeOnEscape);
+    };
   }, []);
 
   function closeMenu() {
@@ -47,9 +76,20 @@ function Header({ onContact, onHome, onCases, onSituations, onReviews }) {
       </a>
       <nav className="desktop-nav" aria-label="Основная навигация">
         <a className="nav-current" href="./" onClick={onHome}>Военное право</a>
-        <a href="./#cases" onClick={onCases}>Результаты дел</a>
-        <a href="./#situations" onClick={onSituations}>С чем помогаем</a>
-        <a href="./#reviews" onClick={onReviews}>Отзывы</a>
+        {navigationItems.slice(0, 3).map(({ id, label }) => (
+          <a key={id} href={`./#${id}`} onClick={(event) => onNavigate(event, id)}>{label}</a>
+        ))}
+        <details className="nav-more" ref={moreRef}>
+          <summary>Ещё<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4" /></svg></summary>
+          <div className="nav-more-links">
+            {navigationItems.slice(3).map(({ id, label }) => (
+              <a key={id} href={`./#${id}`} onClick={(event) => {
+                moreRef.current.open = false;
+                onNavigate(event, id);
+              }}>{label}</a>
+            ))}
+          </div>
+        </details>
       </nav>
       <div className="header-contact"><a href="tel:+79614631334">+7 (961) 463-13-34</a></div>
       <button className="menu-button" type="button" aria-label="Открыть меню" aria-haspopup="dialog" aria-controls="mobile-navigation" aria-expanded={menuOpen} onClick={() => {
@@ -68,9 +108,9 @@ function Header({ onContact, onHome, onCases, onSituations, onReviews }) {
       </div>
       <nav className="mobile-nav-links" aria-label="Мобильная навигация">
         <a href="./" onClick={(event) => selectMenuItem(event, onHome)}>Военное право</a>
-        <a href="./#cases" onClick={(event) => selectMenuItem(event, onCases)}>Результаты дел</a>
-        <a href="./#situations" onClick={(event) => selectMenuItem(event, onSituations)}>С чем помогаем</a>
-        <a href="./#reviews" onClick={(event) => selectMenuItem(event, onReviews)}>Отзывы</a>
+        {navigationItems.map(({ id, label }) => (
+          <a key={id} href={`./#${id}`} onClick={(event) => selectMenuItem(event, (e) => onNavigate(e, id))}>{label}</a>
+        ))}
         <button type="button" onClick={(event) => selectMenuItem(event, onContact)}>Разобрать мою ситуацию бесплатно</button>
       </nav>
       <a className="mobile-nav-phone" href="tel:+79614631334" onClick={closeMenu}>+7 (961) 463-13-34</a>
@@ -83,7 +123,7 @@ function HeroOffer({ onContact }) {
   return (
         <section className="offer" aria-labelledby="main-heading">
           <h1 id="main-heading">Добиваемся ВВК, законного увольнения и выплат для участников СВО и их семей</h1>
-          <p className="lead">Обжалуем отказ в ВВК и неверную категорию годности. Сопровождаем увольнение при законных основаниях, помогаем получить боевые, страховые выплаты и компенсации за ранение.</p>
+          <p className="lead">Отдельная команда юристов по военному праву в Ставрополе. Ведем дело удаленно, пока вы на службе. На бесплатной консультации честно скажем, что вам положено.</p>
           <div className="offer-action">
             <div className="action-row">
               <button type="button" className="button primary-button" onClick={onContact}><span>Разобрать мою ситуацию бесплатно</span><svg className="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#arrow"/></svg></button>
@@ -133,26 +173,7 @@ function ContactDialog({ open, onClose, onComplete, topic }) {
     <div className="dialog-content">
     <h2 id="dialog-title">Разберем вашу ситуацию</h2>
     {topic && <p className="selected-topic">{topic}</p>}
-    <form className="contact-form" onSubmit={(event) => {
-      event.preventDefault();
-      event.currentTarget.reset();
-      onComplete();
-    }}>
-      <input type="hidden" name="topic" value={topic} />
-      <label htmlFor="contact-phone">Номер телефона</label>
-      <input id="contact-phone" name="phone" type="tel" autoComplete="tel" inputMode="tel" placeholder="+7 (___) ___-__-__" required onInput={(event) => {
-        const value = event.currentTarget.value.trim();
-        const digits = value.replace(/\D/g, '');
-        const valid = /^\+?[\d\s().-]+$/.test(value) && digits.length >= 10 && digits.length <= 15;
-        event.currentTarget.setCustomValidity(!value || valid ? '' : 'Введите корректный номер телефона: от 10 до 15 цифр, без букв.');
-      }} aria-describedby="phone-hint" />
-      <p className="phone-hint" id="phone-hint">Ответим в течение 30 минут</p>
-      <label className="consent-label">
-        <input name="consent" type="checkbox" required />
-        <span>Я даю согласие на обработку персональных данных для связи по моей заявке{import.meta.env.VITE_PRIVACY_POLICY_URL && <> и ознакомлен с <a href={import.meta.env.VITE_PRIVACY_POLICY_URL} target="_blank" rel="noopener noreferrer">политикой обработки персональных данных</a></>}.</span>
-      </label>
-      <button className="button primary-button" type="submit">Разобрать мою ситуацию бесплатно</button>
-    </form>
+    <ContactForm topic={topic} onComplete={onComplete} />
     </div>
   </dialog>
   );
@@ -213,6 +234,7 @@ export default function App() {
     setShowThankYou(false);
     requestAnimationFrame(() => {
       const section = document.getElementById(sectionId);
+      if (section) section.tabIndex = -1;
       section?.focus({ preventScroll: true });
       section?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
     });
@@ -222,7 +244,7 @@ export default function App() {
     <>
       <IconDefinitions />
       <div className="site-shell">
-        <Header onContact={openContact} onHome={goHome} onCases={(event) => goToSection(event, 'cases')} onSituations={(event) => goToSection(event, 'situations')} onReviews={(event) => goToSection(event, 'reviews')} />
+        <Header onContact={openContact} onHome={goHome} onNavigate={goToSection} />
         <main id="main" tabIndex={-1}>
           {showThankYou ? (
             <section className="thank-you" aria-labelledby="thank-you-title">
@@ -242,9 +264,16 @@ export default function App() {
           <Cases onContact={openContact} />
           <Situations onContact={openContact} />
           <Reviews />
+          <HonestAssessment onContact={openContact} />
+          <Workflow />
+          <Team />
+          <Pricing onContact={openContact} />
+          <Questions />
+          <ContactSection onComplete={() => navigateThankYou(true)} />
           </>
           )}
         </main>
+        {!showThankYou && <Footer onHome={goHome} onNavigate={goToSection} />}
       </div>
       <ContactDialog open={contactOpen} topic={contactTopic} onClose={closeContact} onComplete={() => navigateThankYou(true)} />
     </>
