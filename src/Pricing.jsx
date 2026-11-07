@@ -18,7 +18,7 @@ export default function Pricing({ onContact }) {
           <dd>от [уточнить] ₽</dd>
         </div>
       </dl>
-      <p className="pricing-note">Что входит в ведение дела и есть ли оплата частями или после выплаты [уточнить]. Конкуренты в Ставрополе предлагают рассрочку 0% и оплату после получения выплаты, без ответа на это блок проигрывает.</p>
+      <p className="pricing-note">Что входит в ведение дела и есть ли оплата частями или после выплаты [уточнить].</p>
       <div className="pricing-action">
         <button className="button primary-button" type="button" onClick={onContact}>
           <span>Разобрать мою ситуацию бесплатно</span>

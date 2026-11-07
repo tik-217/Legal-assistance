@@ -246,6 +246,7 @@ export default function App() {
             <section className="thank-you" aria-labelledby="thank-you-title">
               <svg className="thank-you-icon icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m7 12 3 3 7-7"/></svg>
               <h1 id="thank-you-title" tabIndex={-1}>Спасибо за обращение!</h1>
+              <p>Это демонстрационная форма: заявка не отправлена. Чтобы связаться с нами, позвоните по номеру <a href="tel:+79614631334">+7 (961) 463-13-34</a>.</p>
               <button className="button primary-button" type="button" onClick={goHome}>Вернуться на главную</button>
             </section>
           ) : (

@@ -128,7 +128,7 @@ main{padding-top:36px}.hero-layout{display:grid;grid-template-columns:minmax(0,1
   .trust-item .award-symbol{display:block;width:32px;height:44px}
   .trust-item strong{font-size:14px}
   .trust-item small{font-size:12px}
-  .team-visual{margin-bottom:0}
+  .team-visual{margin-bottom:32px}
   .cases-section{margin:32px auto 0;padding:40px 0}
   .cases-header h2{font-size:clamp(26px,6.8vw,32px);line-height:1.18;letter-spacing:-.7px}
   .case-placeholder,.case-item>summary{padding:16px;gap:12px}
@@ -163,7 +163,7 @@ main{padding-top:36px}.hero-layout{display:grid;grid-template-columns:minmax(0,1
   .rating-text{display:contents}
   .rating .stars{font-size:12px;letter-spacing:.5px}
   .rating-text>span:last-child{grid-column:1/-1;font-size:12px;line-height:1.4}
-  .trust-item .award-symbol,.award-year{display:none}
+  .trust-item .award-symbol{display:none}
   .trust-item.award{display:block;min-width:0}
   .trust-item.award>span{gap:8px}
   .trust-item.award strong{display:flex;align-items:center;min-height:33.6px;font-size:16px;line-height:1.2}
@@ -174,11 +174,9 @@ main{padding-top:36px}.hero-layout{display:grid;grid-template-columns:minmax(0,1
   .rating-value{display:flex;align-items:center;min-height:40px}
   .trust-item.award{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
   .trust-item.award .award-symbol{display:block;width:28px;height:40px;object-fit:contain}
-  .trust-item.award strong{display:none}
+  .trust-item.award strong{display:block;min-height:0;font-size:13px;line-height:1.3}
   .trust-item.award>span{gap:0}
 }
-
-@media(max-width:800px){.case-slot:nth-child(n+5){display:none}}
 
 @media(max-width:1050px){
   :is(.offer-action,.cases-action,.situations-action,.assessment-action,.pricing-action,.contact-form,.thank-you) .primary-button{width:300px;max-width:100%}
@@ -422,10 +420,7 @@ main section[tabindex="-1"]:focus{outline:none}
   .footer{padding:48px 0}
 }
 @media(max-width:800px){
-  .cases-section{margin:48px auto;padding:48px 0}
-  .situations-section,.team-section,.questions-section{margin:56px auto}
-  .reviews-section{margin:56px auto;padding-top:48px}
-  .workflow-section,.pricing-section,.contact-section{padding:48px 0}
-  .pricing-section,.contact-section{margin-top:56px}
+  .cases-section,.situations-section,.reviews-section,.workflow-section,.team-section,.pricing-section,.questions-section,.contact-section{margin:0 auto;padding:48px 0}
+  .team-visual{margin-bottom:32px}
   .footer{padding:40px 0}
 }
