@@ -151,7 +151,7 @@ function TrustStrip() {
   );
 }
 
-function ContactDialog({ open, onClose, onComplete, topic }) {
+function ContactDialog({ open, onClose, onComplete }) {
   const dialogRef = useRef(null);
   useEffect(() => {
     const element = dialogRef.current;
@@ -171,8 +171,7 @@ function ContactDialog({ open, onClose, onComplete, topic }) {
     <button className="close-dialog" type="button" onClick={onClose} aria-label="Закрыть окно"><svg className="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button>
     <div className="dialog-content">
     <h2 id="dialog-title">Разберем вашу ситуацию</h2>
-    {topic && <p className="selected-topic">{topic}</p>}
-    <ContactForm topic={topic} onComplete={onComplete} />
+    <ContactForm onComplete={onComplete} />
     </div>
   </dialog>
   );
@@ -180,10 +179,8 @@ function ContactDialog({ open, onClose, onComplete, topic }) {
 
 export default function App() {
   const [contactOpen, setContactOpen] = useState(false);
-  const [contactTopic, setContactTopic] = useState('');
   const [showThankYou, setShowThankYou] = useState(() => new URLSearchParams(window.location.search).has('thank-you'));
-  const openContact = (topic = '') => {
-    setContactTopic(typeof topic === 'string' ? topic : '');
+  const openContact = () => {
     setContactOpen(true);
   };
   const closeContact = () => setContactOpen(false);
@@ -273,7 +270,7 @@ export default function App() {
         </main>
         {!showThankYou && <Footer onHome={goHome} onNavigate={goToSection} />}
       </div>
-      <ContactDialog open={contactOpen} topic={contactTopic} onClose={closeContact} onComplete={() => navigateThankYou(true)} />
+      <ContactDialog open={contactOpen} onClose={closeContact} onComplete={() => navigateThankYou(true)} />
     </>
   );
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { CONSENT_URL, PRIVACY_URL } from './legal-links.js';
 
-export default function ContactForm({ onComplete, topic = '', idPrefix = 'contact' }) {
+export default function ContactForm({ onComplete, idPrefix = 'contact' }) {
   const phoneId = `${idPrefix}-phone`;
   const hintId = `${idPrefix}-phone-hint`;
 
@@ -11,7 +11,6 @@ export default function ContactForm({ onComplete, topic = '', idPrefix = 'contac
       event.currentTarget.reset();
       onComplete();
     }}>
-      <input type="hidden" name="topic" value={topic} />
       <label htmlFor={phoneId}>Номер телефона</label>
       <input id={phoneId} name="phone" type="tel" autoComplete="tel" inputMode="tel" placeholder="+7 (___) ___-__-__" required onInput={(event) => {
         const value = event.currentTarget.value.trim();

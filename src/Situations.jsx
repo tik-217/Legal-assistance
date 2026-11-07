@@ -15,7 +15,7 @@ export default function Situations({ onContact }) {
       <h2 id="situations-heading">С чем к нам приходят военнослужащие и их семьи</h2>
       <div className="situations-grid">
         {situations.map(({ title, description }) => (
-          <button className="situation-card" type="button" key={title} onClick={() => onContact(title + description)}>
+          <button className="situation-card" type="button" key={title} onClick={() => onContact()}>
             <span className="situation-copy"><strong>{title}</strong>{description}</span>
             <svg className="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#arrow" /></svg>
           </button>
