@@ -23,9 +23,8 @@ export default function ContactForm({ onComplete, topic = '', idPrefix = 'contac
       <div className="consent-control">
         <label className="consent-label">
           <input name="consent" type="checkbox" required />
-          <span>Я даю <a href={CONSENT_URL} target="_blank" rel="noopener noreferrer">согласие на обработку персональных данных</a> для связи по моей заявке.</span>
+          <span>Я даю <a href={CONSENT_URL} target="_blank" rel="noopener noreferrer">согласие на обработку персональных данных</a> для связи по моей заявке в соответствии с <a href={PRIVACY_URL} target="_blank" rel="noopener noreferrer">политикой обработки персональных данных</a>.</span>
         </label>
-        <p className="privacy-note">Порядок обработки данных — в <a href={PRIVACY_URL} target="_blank" rel="noopener noreferrer">политике обработки персональных данных</a>.</p>
       </div>
       <button className="button primary-button" type="submit">Разобрать мою ситуацию бесплатно</button>
     </form>

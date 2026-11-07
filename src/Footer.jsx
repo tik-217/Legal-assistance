@@ -15,9 +15,11 @@ export default function Footer({ onHome, onNavigate }) {
         {navigationItems.slice(0, 3).map(({ id, label }) => (
           <a key={id} href={`./#${id}`} onClick={(event) => onNavigate(event, id)}>{label}</a>
         ))}
-        <a className="footer-document" href={PRIVACY_URL}>Политика обработки персональных данных</a>
-        <a className="footer-document" href={CONSENT_URL}>Согласие на обработку персональных данных</a>
       </nav>
+      <div className="footer-documents">
+        <a href={PRIVACY_URL}>Политика обработки персональных данных</a>
+        <a href={CONSENT_URL}>Согласие на обработку персональных данных</a>
+      </div>
       <a className="footer-phone" href="tel:+79614631334">+7 (961) 463-13-34</a>
     </footer>
   );

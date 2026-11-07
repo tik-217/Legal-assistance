@@ -5,7 +5,6 @@ import goodPlaceBadge from './assets/yandex-good-place.png';
 import Cases from './Cases.jsx';
 import Situations from './Situations.jsx';
 import Reviews from './Reviews.jsx';
-import HonestAssessment from './HonestAssessment.jsx';
 import Workflow from './Workflow.jsx';
 import Team from './Team.jsx';
 import Pricing from './Pricing.jsx';
@@ -264,7 +263,6 @@ export default function App() {
           <Cases onContact={openContact} />
           <Situations onContact={openContact} />
           <Reviews />
-          <HonestAssessment onContact={openContact} />
           <Workflow />
           <Team />
           <Pricing onContact={openContact} />
