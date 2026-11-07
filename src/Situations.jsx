@@ -12,7 +12,7 @@ const situations = [
 export default function Situations({ onContact }) {
   return (
     <section className="situations-section" id="situations" tabIndex={-1} aria-labelledby="situations-heading">
-      <h2 id="situations-heading">С чем к нам приходят военнослужащие и их семьи</h2>
+      <h2 id="situations-heading">С чем к нам приходят военнослужащие и члены их семьи</h2>
       <div className="situations-grid">
         {situations.map(({ title, description }) => (
           <button className="situation-card" type="button" key={title} onClick={() => onContact()}>
